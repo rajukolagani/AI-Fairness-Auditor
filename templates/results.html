@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Audit Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Audit Results for: {{ results.protected_attribute }}</h1>
+
+        <div class="card">
+            <h3>Overall Model Accuracy</h3>
+            <p class="metric">{{ results.accuracy }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Disparate Impact Analysis</h3>
+            <p>
+                This measures if a protected group receives positive outcomes at a similar rate to a privileged group. A value below <strong>0.80</strong> often indicates bias.
+            </p>
+            <p class="metric {{ 'fair' if results.is_fair else 'unfair' }}">
+                {{ results.disparate_impact }}
+            </p>
+            <div class="details">
+                <p><strong>Privileged Group ({{ results.privileged_group }}):</strong> {{ results.privileged_rate }} positive outcomes.</p>
+                <p><strong>Unprivileged Group ({{ results.unprivileged_group }}):</strong> {{ results.unprivileged_rate }} positive outcomes.</p>
+            </div>
+        </div>
+
+        <a href="/" class="back-link">Run Another Audit</a>
+    </div>
+</body>
+</html>

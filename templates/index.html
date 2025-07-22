@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Fairness Auditor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>AI Fairness & Bias Auditor ⚖️</h1>
+        <p>
+            This tool trains a model to predict income (>50K) based on census data,
+            then audits the model for bias across different demographic groups.
+        </p>
+        <form action="/audit" method="post">
+            <label for="attribute">Select an attribute to audit for bias:</label>
+            <select name="attribute" id="attribute">
+                {% for col in columns %}
+                <option value="{{ col }}">{{ col|replace('-', ' ')|title }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Run Audit</button>
+        </form>
+    </div>
+</body>
+</html>
